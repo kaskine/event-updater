@@ -3,7 +3,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.CountDownLatch;
 
 class Converter {
 
@@ -21,10 +20,10 @@ class Converter {
         try {
             convert(new File(excelPath), new File(htmlPath));
         } catch (IOException e) {
-            System.out.println("Error in file conversion. Check input.");
+            System.out.println("Error: File conversion. Check input.");
             e.printStackTrace();
         } catch (InterruptedException e) {
-            System.out.println("Error reading Excel file. Check input.");
+            System.out.println("Error: Reading Excel file. Check input.");
             e.printStackTrace();
         }
     }
@@ -38,7 +37,7 @@ class Converter {
         try {
             convert(excelPath, htmlPath);
         } catch (IOException e) {
-            System.out.println("Error writing file. Check input.");
+            System.out.println("Error: Writing file. Check input.");
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -46,24 +45,24 @@ class Converter {
     }
 
     /**
-     * Converts the data in the Excel file to HTML
+     * Gathers the data in the Excel file and the HTML file and sends it to the output method
      * @param excelPath - The path of the Excel file
      * @param htmlPath - The path of the HTML file
      * @throws InterruptedException - If there is an error reading the Excel file
      * @throws IOException - If there is an error writing the output file
      */
     private void convert(File excelPath, File htmlPath) throws InterruptedException, IOException {
-        CountDownLatch countDownLatch = new CountDownLatch(1);
-        ExcelReadThread excelReadThread = new ExcelReadThread(excelPath, countDownLatch);
-        new Thread(excelReadThread).start();
+        RunnableExcelReader runnableExcelReader = new RunnableExcelReader(excelPath);
+        Thread excelReadThread = new Thread(runnableExcelReader);
+        excelReadThread.start();
 
         Scanner scanner = new Scanner(htmlPath, CHARSET_FORMAT);
         List<String> header = getHeader(scanner);
         List<String> footer = getFooter(scanner);
         scanner.close();
 
-        countDownLatch.await();
-        write(htmlPath, header, excelReadThread.getEvents(), footer);
+        excelReadThread.join();
+        write(htmlPath, header, runnableExcelReader.getEvents(), footer);
     }
 
     /**
