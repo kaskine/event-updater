@@ -6,9 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6391634-079b-48d6-bae9-3a7155ff714f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/RunnableExcelReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RunnableExcelReader.java" afterDir="false" />
-    </list>
+    <list default="true" id="a6391634-079b-48d6-bae9-3a7155ff714f" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,7 +34,7 @@
       <file leaf-file-name="RunnableExcelReader.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/RunnableExcelReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
+            <state relative-caret-position="291">
               <caret line="54" column="12" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -239,12 +237,12 @@
       <workItem from="1529537938078" duration="674000" />
       <workItem from="1529549446366" duration="54000" />
       <workItem from="1530851374335" duration="14942000" />
-      <workItem from="1530991070903" duration="12397000" />
+      <workItem from="1530991070903" duration="12552000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65772000" />
+    <option name="totallyTimeSpent" value="65927000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -722,7 +720,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RunnableExcelReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
+        <state relative-caret-position="291">
           <caret line="54" column="12" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
