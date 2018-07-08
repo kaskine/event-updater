@@ -57,7 +57,7 @@ class Converter {
         CountDownLatch countDownLatch = new CountDownLatch(1);
 
         ExcelReadThread excelReadThread = new ExcelReadThread(excelPath, countDownLatch);
-        excelReadThread.run();
+        new Thread(excelReadThread).start();
 
         Scanner scanner = new Scanner(htmlPath, CHARSET_FORMAT);
         List<String> header = getHeader(scanner);
