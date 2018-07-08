@@ -43,7 +43,6 @@ public class RunnableExcelReader implements Runnable {
         for (Row row : sheet) {
             CellType dateCellType = row.getCell(0).getCellTypeEnum();
             String date = "";
-
             if (dateCellType == CellType.STRING) {
                 date = row.getCell(0).getStringCellValue();
                 if (date.equalsIgnoreCase("date")) {
@@ -53,11 +52,14 @@ public class RunnableExcelReader implements Runnable {
             else if (dateCellType == CellType.NUMERIC) {
                 date = DATE_FORMAT.format(row.getCell(0).getDateCellValue());
             }
-
+            
             String label = row.getCell(1).getStringCellValue();
-            String address = row.getCell(1).getHyperlink().getAddress();
             String location = row.getCell(2).getStringCellValue();
-
+            String address = "";
+            Hyperlink hyperlink = row.getCell(1).getHyperlink();
+            if (hyperlink != null) {
+                address = hyperlink.getAddress();
+            }
             events.add(new Event(date, label, location, address));
         }
     }

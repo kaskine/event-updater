@@ -7,13 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6391634-079b-48d6-bae9-3a7155ff714f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/event-updater/RunnableExcelReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/event-updater-jar/event-updater.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/event-updater-jar/event-updater.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/event-updater/Converter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/event-updater/Converter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/event-updater/ExcelReadThread.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Converter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Converter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelReadThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RunnableExcelReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RunnableExcelReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RunnableExcelReader.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,11 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RunnableExcelReader.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RunnableExcelReader.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/RunnableExcelReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1080">
-              <caret line="72" column="40" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
+            <state relative-caret-position="345">
+              <caret line="54" column="12" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#800#801#0" expanded="true" />
@@ -53,7 +47,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Converter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Converter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Converter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
@@ -107,8 +101,8 @@
         <option value="$PROJECT_DIR$/src/ExcelReadThread.java" />
         <option value="$PROJECT_DIR$/src/ExcelReadRunnable.java" />
         <option value="$PROJECT_DIR$/src/ExcelReaderRunnable.java" />
-        <option value="$PROJECT_DIR$/src/RunnableExcelReader.java" />
         <option value="$PROJECT_DIR$/src/Converter.java" />
+        <option value="$PROJECT_DIR$/src/RunnableExcelReader.java" />
       </list>
     </option>
   </component>
@@ -245,12 +239,12 @@
       <workItem from="1529537938078" duration="674000" />
       <workItem from="1529549446366" duration="54000" />
       <workItem from="1530851374335" duration="14942000" />
-      <workItem from="1530991070903" duration="11713000" />
+      <workItem from="1530991070903" duration="12397000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65088000" />
+    <option name="totallyTimeSpent" value="65772000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -716,24 +710,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RunnableExcelReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1080">
-          <caret line="72" column="40" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#800#801#0" expanded="true" />
-            <element signature="e#829#830#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Converter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RunnableExcelReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="54" column="12" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#800#801#0" expanded="true" />
+            <element signature="e#829#830#0" expanded="true" />
           </folding>
         </state>
       </provider>
