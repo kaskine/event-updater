@@ -74,7 +74,6 @@ public class ExcelReadThread implements Runnable {
      */
     @Override
     public void run() {
-
         try {
             readExcel();
         } catch (InvalidFormatException | IOException e) {

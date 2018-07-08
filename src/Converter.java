@@ -53,9 +53,7 @@ class Converter {
      * @throws IOException - If there is an error writing the output file
      */
     private void convert(File excelPath, File htmlPath) throws InterruptedException, IOException {
-
         CountDownLatch countDownLatch = new CountDownLatch(1);
-
         ExcelReadThread excelReadThread = new ExcelReadThread(excelPath, countDownLatch);
         new Thread(excelReadThread).start();
 
@@ -74,7 +72,6 @@ class Converter {
      * @return Returns the page text above the event information section
      */
     private List<String> getHeader(Scanner scanner) {
-
         List<String> header = new LinkedList<>();
 
         while (scanner.hasNextLine()) {
@@ -94,7 +91,6 @@ class Converter {
      * @return Returns the page text below the event information section
      */
     private List<String> getFooter(Scanner scanner) {
-
         List<String> footer = new LinkedList<>();
 
         while (scanner.hasNextLine()) {
