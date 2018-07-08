@@ -52,7 +52,7 @@ public class RunnableExcelReader implements Runnable {
             else if (dateCellType == CellType.NUMERIC) {
                 date = DATE_FORMAT.format(row.getCell(0).getDateCellValue());
             }
-            
+
             String label = row.getCell(1).getStringCellValue();
             String location = row.getCell(2).getStringCellValue();
             String address = "";
