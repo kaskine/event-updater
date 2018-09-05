@@ -64,7 +64,7 @@ class Displayable {
         JButton buttonUpdate = new JButton("Update Events");
         buttonUpdate.addActionListener(e -> {
             if (hasCompletedFileSelection() && hasChangedFileSelection) {
-                new Converter(fileExcel, fileHTML);
+                Converter.convert(fileExcel, fileHTML);
                 buttonUpdate.setText("Updated");
                 hasChangedFileSelection = false;
             }

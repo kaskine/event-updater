@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Main {
             new Displayable();
         }
         else if (arguments.size() == 2) {
-            new Converter(arguments.get(0), arguments.get(1));
+            Converter.convert(arguments.get(0), arguments.get(1));
         }
         else {
             System.out.println("Invalid Parameters. Please try again.");
