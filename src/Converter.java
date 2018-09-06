@@ -2,11 +2,15 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 
 class Converter {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMMM d, YYYY");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMMMM d, YYYY");
     private static final Console console = System.console();
 
     private static final String KEY_BEGIN = "<!-- Begin Events Body -->";
@@ -16,90 +20,95 @@ class Converter {
 
     private Converter() {}
 
-    static boolean convert(String excelPath, String htmlPath) {
-        return convert(new File(excelPath), new File(htmlPath));
+    /**
+     * @param excelPath - A String representing the Path to the Excel file
+     * @param htmlPath  - A String representing the Path to the HTML file
+     */
+    static void convert(String excelPath, String htmlPath) {
+        convert(Paths.get(excelPath), Paths.get(htmlPath));
     }
 
     /**
      * Gathers the data in the Excel file and the HTML file and sends it to the output method
      *
-     * @param excelFile - The File Object representing the input Excel file
-     * @param htmlFile  - The File Object representing the output HTML file
-     * @return Returns true if file update is successful.
+     * @param excelPath - The path to the input Excel file
+     * @param htmlPath  - The path to the output HTML file
      */
-    static boolean convert(File excelFile, File htmlFile) {
+    static void convert(Path excelPath, Path htmlPath) {
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(htmlFile))) {
+        try (BufferedReader reader = Files.newBufferedReader(htmlPath)) {
 
-            File tempFile = File.createTempFile(TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX);
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(tempFile));
+            Path tempPath = Files.createTempFile(TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX);
+            BufferedWriter writer = Files.newBufferedWriter(tempPath);
 
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains(KEY_BEGIN)) {
-                    break;
-                }
-                bufferedWriter.write(line);
-                bufferedWriter.newLine();
-
-            }
-
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains(KEY_END)) {
-                    break;
-                }
-            }
-
-            bufferedWriter.write(KEY_BEGIN);
-            bufferedWriter.newLine();
-            Workbook workbook = WorkbookFactory.create(excelFile);
-            Sheet sheet = workbook.getSheet("Sheet1");
-            for (Row row : sheet) {
+            final boolean[] shouldIgnoreLine = {false};
+            reader.lines().forEach(line -> {
                 try {
-                    CellType dateCellType = row.getCell(0).getCellTypeEnum();
-                    String date = "";
-                    if (dateCellType == CellType.STRING) {
-                        date = row.getCell(0).getStringCellValue();
-                    }
-                    else if (dateCellType == CellType.NUMERIC) {
-                        date = DATE_FORMAT.format(row.getCell(0).getDateCellValue());
+
+                    if (!shouldIgnoreLine[0]) {
+                        writer.write(line);
+                        writer.newLine();
                     }
 
-                    String label = row.getCell(1).getStringCellValue();
-                    String location = row.getCell(2).getStringCellValue();
-                    String address = "";
-                    Hyperlink hyperlink = row.getCell(1).getHyperlink();
-                    if (hyperlink != null) {
-                        address = hyperlink.getAddress();
+                    if (line.contains(KEY_BEGIN)) {
+                        shouldIgnoreLine[0] = true;
+                        getExcelData(excelPath, writer);
                     }
-                    bufferedWriter.write(new Event(date, label, location, address).toString());
-                    bufferedWriter.newLine();
-                } catch (Exception e) {
+                    else if (line.contains(KEY_END)) {
+                        shouldIgnoreLine[0] = false;
+                        writer.write(line);
+                        writer.newLine();
+                    }
+
+                } catch (IOException e) {
+                    console.writer().println("Error: Writer cannot write to file.");
+                    e.printStackTrace();
+                } catch (InvalidFormatException e) {
                     console.writer().println("Error: Incorrect excel row formatting.");
                     e.printStackTrace();
                 }
-            }
-            bufferedWriter.write(KEY_END);
-            bufferedWriter.newLine();
+            });
 
-            while ((line = bufferedReader.readLine()) != null) {
-                bufferedWriter.write(line);
-                bufferedWriter.newLine();
-            }
-            bufferedReader.close();
-            bufferedWriter.close();
+            writer.close();
+            Files.move(tempPath, htmlPath, StandardCopyOption.REPLACE_EXISTING);
 
-            return htmlFile.delete() && tempFile.renameTo(htmlFile);
         } catch (FileNotFoundException e) {
             console.writer().println("Error: File not found.");
-            e.printStackTrace();
-        } catch (InvalidFormatException e) {
-            console.writer().println("Error: Excel file is improperly formatted.");
             e.printStackTrace();
         } catch (IOException e) {
             console.writer().println("Error: Writer cannot write to file.");
             e.printStackTrace();
         }
-        return false;
+    }
+
+    /**
+     *
+     * @param excelPath - The Path represent the file system location of the Excel file
+     * @param writer - The BufferedWriter writing the output file
+     * @throws IOException - If there is an error writing to file
+     * @throws InvalidFormatException - If the Excel rows are in an invalid format
+     */
+    private static void getExcelData(Path excelPath, BufferedWriter writer) throws IOException, InvalidFormatException {
+        Workbook workbook = WorkbookFactory.create(excelPath.toFile());
+        for (Row row : workbook.getSheet("Sheet1")) {
+            CellType dateCellType = row.getCell(0).getCellTypeEnum();
+            String date = "";
+            if (dateCellType == CellType.STRING) {
+                date = row.getCell(0).getStringCellValue();
+            }
+            else if (dateCellType == CellType.NUMERIC) {
+                date = DATE_FORMAT.format(row.getCell(0).getDateCellValue());
+            }
+
+            String label = row.getCell(1).getStringCellValue();
+            String location = row.getCell(2).getStringCellValue();
+            String address = "";
+            Hyperlink hyperlink = row.getCell(1).getHyperlink();
+            if (hyperlink != null) {
+                address = hyperlink.getAddress();
+            }
+            writer.write(new Event(date, label, location, address).toString());
+            writer.newLine();
+        }
     }
 }

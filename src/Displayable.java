@@ -2,12 +2,13 @@ import com.apple.eawt.Application;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 class Displayable {
 
     private JFrame frame;
-    private File fileExcel = null, fileHTML = null;
+    private Path excelPath = null, htmlPath = null;
     private boolean hasChangedFileSelection = false;
 
     private static final int WIDTH = 300;
@@ -64,7 +65,7 @@ class Displayable {
         JButton buttonUpdate = new JButton("Update Events");
         buttonUpdate.addActionListener(e -> {
             if (hasCompletedFileSelection() && hasChangedFileSelection) {
-                Converter.convert(fileExcel, fileHTML);
+                Converter.convert(excelPath, htmlPath);
                 buttonUpdate.setText("Updated");
                 hasChangedFileSelection = false;
             }
@@ -72,10 +73,10 @@ class Displayable {
 
         JButton buttonExcel = new JButton("Excel File");
         buttonExcel.addActionListener(e -> {
-            File file = getFile();
-            if (file != null) {
-                fileExcel = file;
-                buttonExcel.setText("Excel File: " + file.getName());
+            Path path = getPath();
+            if (path != null) {
+                excelPath = path;
+                buttonExcel.setText("Excel File: " + path.getName(path.getNameCount() - 1));
                 hasChangedFileSelection = true;
                 buttonUpdate.setText("Update Events");
             }
@@ -83,10 +84,10 @@ class Displayable {
 
         JButton buttonHTML = new JButton("HTML File");
         buttonHTML.addActionListener(e -> {
-            File file = getFile();
-            if (file != null) {
-                fileHTML = file;
-                buttonHTML.setText("HTML File: " + file.getName());
+            Path path = getPath();
+            if (path != null) {
+                htmlPath = path;
+                buttonHTML.setText("HTML File: " + path.getName(path.getNameCount() - 1));
                 hasChangedFileSelection = true;
                 buttonUpdate.setText("Update Events");
             }
@@ -99,27 +100,22 @@ class Displayable {
 
     /**
      * Verifies that both files have been selected and that the files chosen are the appropriate file types.
+     *
      * @return Returns true if both files have been selected and are the appropriate file types
      */
     private boolean hasCompletedFileSelection() {
-        return fileExcel != null && fileHTML != null && (fileExcel.toString().contains(INPUT_FILE_TYPE)
-                                                         && fileHTML.toString().contains(OUTPUT_FILE_TYPE));
+        return excelPath != null && htmlPath != null && (excelPath.toString().contains(INPUT_FILE_TYPE)
+                                                         && htmlPath.toString().contains(OUTPUT_FILE_TYPE));
     }
 
     /**
      * Calls a JFileChooser for the user to select their files
-     * @return Returns a file the user has selected with a JFileChooser
+     *
+     * @return Returns a Path representing the file system location of the file the user has selected with a JFileChooser
      */
-    private File getFile() {
+    private Path getPath() {
         JFileChooser fileChooser = new JFileChooser();
         int returnVal = fileChooser.showOpenDialog(frame);
-
-        File file = null;
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            file = fileChooser.getSelectedFile();
-        }
-
-        return file;
+        return (returnVal == JFileChooser.APPROVE_OPTION) ? Paths.get(fileChooser.getSelectedFile().toString()) : null;
     }
 }
