@@ -23,10 +23,11 @@ public class Event {
 
     /**
      * Constructs a new Event Object
-     * @param date - The date of the Event
-     * @param name - The name of the Event
+     *
+     * @param date     - The date of the Event
+     * @param name     - The name of the Event
      * @param location - The location of the Event
-     * @param url - The URL of the Event website
+     * @param url      - The URL of the Event website
      */
     Event(String date, String name, String location, String url) {
         this.date = removeQuotations(date);
@@ -37,6 +38,7 @@ public class Event {
 
     /**
      * Removes quotations in a String
+     *
      * @param str - The String containing the quotations to be removed
      * @return Returns a String with all quotation marks removed
      */
@@ -48,22 +50,64 @@ public class Event {
 
     /**
      * Generates a block of HTML from the Event information
+     *
      * @return Returns a String containing HTML which will display the Event information
+     */
+    String toPrintableFormat() {
+
+        return header
+               + linefeed
+               + tab
+               + nameTag
+               + linefeed
+               + tab
+               + tab
+               + urlTag
+               + name
+               + urlTagEnd
+               + linefeed
+               + tab
+               + nameTagEnd
+               + linefeed
+               +
+
+               linefeed
+               +
+
+               tab
+               + dateTag
+               + linefeed
+               + tab
+               + tab
+               + date
+               + linefeed
+               + tab
+               + tab
+               + locationTagLine
+               + location
+               + linefeed
+               + tab
+               + dateTagEnd
+               + linefeed
+               + footer
+               + linefeed
+               + linefeed;
+    }
+
+    /**
+     * @return Returns a string representation of this Object
      */
     @Override
     public String toString() {
+        return "Name: " + name + " Date: " + date + " Location: " + location;
+    }
 
-        return header + linefeed +
-               tab + nameTag + linefeed +
-               tab + tab + urlTag + name + urlTagEnd + linefeed +
-               tab + nameTagEnd + linefeed +
-
-               linefeed +
-
-               tab + dateTag + linefeed +
-               tab + tab + date + linefeed +
-               tab + tab + locationTagLine + location + linefeed +
-               tab + dateTagEnd + linefeed +
-               footer + linefeed + linefeed;
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Event)) {
+            return false;
+        }
+        Event e = (Event) obj;
+        return this.toPrintableFormat().equals(e.toPrintableFormat());
     }
 }
